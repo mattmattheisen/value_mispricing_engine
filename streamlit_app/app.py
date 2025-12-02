@@ -1,7 +1,6 @@
 
 
 import streamlit as st
-
 import os
 import sys
 
@@ -9,7 +8,6 @@ import sys
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT_DIR not in sys.path:
     sys.path.append(ROOT_DIR)
-
 
 from fetch.fetch_value_factors import fetch_value_factors
 
