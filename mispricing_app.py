@@ -1,4 +1,28 @@
 import streamlit as st
+from fetch.fetch_value_factors import fetch_value_factors
 
 st.title("Value / Mispricing Engine")
-st.write("If you see this page, the deployment is working.")
+
+st.write(
+    "Enter one or more stock tickers (comma-separated) "
+    "and I'll fetch the core value factors from Yahoo Finance."
+)
+
+# Text box for tickers
+tickers_input = st.text_input(
+    "Tickers (comma-separated):",
+    value="TWST, ENSG, SPXC",
+)
+
+if st.button("Fetch value factors"):
+    # Convert "TWST, ENSG, SPXC" → ["TWST", "ENSG", "SPXC"]
+    tickers = [t.strip().upper() for t in tickers_input.split(",") if t.strip()]
+
+    if not tickers:
+        st.warning("Please enter at least one ticker.")
+    else:
+        with st.spinner("Fetching data from Yahoo Finance..."):
+            df = fetch_value_factors(tickers)
+
+        st.subheader("Raw value factors")
+        st.dataframe(df)
